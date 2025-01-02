@@ -38,7 +38,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource 
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -95,9 +95,18 @@ class MainActivity : ComponentActivity() {
                                     targetValue = 180f, animationSpec = tween(durationMillis = 1000)
                                 )
                             }
+                            val rotateYd: Deferred<Unit> = async {
+                                rotateY[index].animateTo(
+                                    targetValue = 180f,
+                                    animationSpec = tween(durationMillis = 1)
+                                )
+                            }
                             aDeferred.await()
                             bDeferred.await()
                             cDeferred.await()
+                            rotateYd.await()
+                            message[index].value = "正"
+                            rotateYNoA[index].floatValue = 180f
                         } else {
 
                             val aDeferred: Deferred<Unit> = async {
